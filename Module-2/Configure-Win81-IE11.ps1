@@ -31,10 +31,21 @@ if (!(Test-Path -Path "$DesktopFolder")) { mkdir "$DesktopFolder" }
 # Tres métodos distintos para descargar ficheros en PowerShell
 # https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell
 # Descarga Git-Portable
-Write-Host "Descargando Git-Portable (32538592 bytes) ... " -ForegroundColor Green -NoNewline
+Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
 $start_time = Get-Date
 Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/PortableGit-2.12.0-64-bit.7z.exe -OutFile "$DesktopFolder\PortableGit-2.12.0-32-bit.7z.exe"
-Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)"
+Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+
+# Descarga Git-Portable
+Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
+$start_time = Get-Date
+Invoke-WebRequest http://www.7-zip.org/a/7z1604.msi -OutFile "$DesktopFolder\7z1604.msi"
+Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+
+# Instalación de 7-Zip
+Write-Host "Instalando 7-Zip ... " -ForegroundColor Green -NoNewline
+msiexec.exe /i "$DesktopFolder\7z1604.msi" /passive
+Write-Host "OK"-ForegroundColor Yellow
 
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
