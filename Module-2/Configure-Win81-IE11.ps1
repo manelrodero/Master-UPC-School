@@ -26,26 +26,34 @@ Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsU
 # Creación de la carpeta MASTER en el escritorio
 Write-Host "Creando carpeta MASTER" -ForegroundColor Green
 $DesktopFolder = "$([Environment]::GetFolderPath("Desktop"))\MASTER"
-if (!(Test-Path -Path "$DesktopFolder")) { mkdir "$DesktopFolder" }
+if (!(Test-Path -Path "$DesktopFolder")) { mkdir "$DesktopFolder" | Out-Null }
+if (!(Test-Path -Path "$DesktopFolder\Downloads")) { mkdir "$DesktopFolder\Downloads" | Out-Null }
 
 # Tres métodos distintos para descargar ficheros en PowerShell
 # https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell
 # Descarga Git-Portable
+$progGit = "PortableGit-2.12.0-64-bit.7z.exe"
 Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
 $start_time = Get-Date
-Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/PortableGit-2.12.0-64-bit.7z.exe -OutFile "$DesktopFolder\PortableGit-2.12.0-32-bit.7z.exe"
+Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
 Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 
 # Descarga Git-Portable
+$prog7zip = "7z1604.msi"
 Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
 $start_time = Get-Date
-Invoke-WebRequest http://www.7-zip.org/a/7z1604.msi -OutFile "$DesktopFolder\7z1604.msi"
+Invoke-WebRequest http://www.7-zip.org/a/$prog7zip -OutFile "$DesktopFolder\Downloads\$prog7zip"
 Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 
 # Instalación de 7-Zip
 Write-Host "Instalando 7-Zip ... " -ForegroundColor Green -NoNewline
-msiexec.exe /i "$DesktopFolder\7z1604.msi" /passive
-Write-Host "OK"-ForegroundColor Yellow
+msiexec.exe /i "$DesktopFolder\Downloads\$prog7zip" /passive
+Write-Host "OK" -ForegroundColor Yellow
+
+# Instalación de Git-Portable
+Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" "$DesktopFolder\$progGit"
+Write-Host "OK" -ForegroundColor Yellow
 
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
