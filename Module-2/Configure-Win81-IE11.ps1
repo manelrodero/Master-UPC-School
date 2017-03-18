@@ -52,7 +52,7 @@ Write-Host "OK" -ForegroundColor Yellow
 
 # Instalación de Git-Portable
 Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
-& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" "$DesktopFolder\$progGit"
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" "$DesktopFolder\Downloads\$progGit"
 Write-Host "OK" -ForegroundColor Yellow
 
 # Final del script (evitar que se cierre)
