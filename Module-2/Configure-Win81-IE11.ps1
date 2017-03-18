@@ -31,14 +31,8 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads")) { mkdir "$DesktopFolder\Downl
 
 # Tres métodos distintos para descargar ficheros en PowerShell
 # https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell
-# Descarga Git-Portable
-$progGit = "PortableGit-2.12.0-64-bit.7z.exe"
-Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
-$start_time = Get-Date
-Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
-Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 
-# Descarga Git-Portable
+# Descarga 7-Zip
 $prog7zip = "7z1604.msi"
 Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
 $start_time = Get-Date
@@ -49,6 +43,13 @@ Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundC
 Write-Host "Instalando 7-Zip ... " -ForegroundColor Green -NoNewline
 msiexec.exe /i "$DesktopFolder\Downloads\$prog7zip" /passive
 Write-Host "OK" -ForegroundColor Yellow
+
+# Descarga Git-Portable
+$progGit = "PortableGit-2.12.0-64-bit.7z.exe"
+Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
+$start_time = Get-Date
+Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
+Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 
 # Instalación de Git-Portable
 Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
