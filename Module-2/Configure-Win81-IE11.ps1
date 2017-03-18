@@ -13,3 +13,9 @@ Update-Help
 # Cambio del teclado en-US a es-ES ;-)
 Write-Host "Cambiando teclado a es-ES" -ForegroundColor Green
 Set-WinUserLanguageList -LanguageList es-ES -Force
+
+# Deshabilitar instalación automática de actualizaciones
+Write-Host "Deshabilitando Auto Update (Microsoft Update)" -ForegroundColor Green
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'AUOptions' -Value 2
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'CachedAUOptions' -Value 2
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'IncludeRecommendedUpdates' -Value 1
