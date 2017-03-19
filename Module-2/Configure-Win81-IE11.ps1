@@ -1,5 +1,12 @@
 # Script de Configuración de Windows 8.1 IE11
 
+# Configuración de la zona horaria
+tzutil /s "Romance Standard Time" 
+Set-ItemProperty -Path 'HKCU:\Control Panel\International' -Name sShortTime -Value H:mm
+Set-ItemProperty -Path 'HKCU:\Control Panel\International' -Name sTimeFormat -Value H:mm:ss
+Set-ItemProperty -Path 'HKCU:\Control Panel\International' -Name sShortDate -Value d/M/yyyy
+Set-ItemProperty -Path 'HKCU:\Control Panel\International' -Name iFirstDayOfWeek -Value 0
+
 # Actualización de la ayuda de PowerShell
 Write-Host "Actualizando ayuda de PowerShell" -ForegroundColor Green
 Update-Help
@@ -53,7 +60,7 @@ Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundC
 
 # Instalación de Git-Portable
 Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
-& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" "$DesktopFolder\Downloads\$progGit"
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" -y "$DesktopFolder\Downloads\$progGit" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
 # Final del script (evitar que se cierre)
