@@ -72,6 +72,10 @@ if (Test-Path -Path "$DesktopFolder\Git") { Remove-Item -Path "$DesktopFolder\Gi
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" -y "$DesktopFolder\Downloads\$progGit" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga scripts del Máster
+if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts" | Out-Null }
+& "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
 $tecla=$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
