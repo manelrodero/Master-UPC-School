@@ -56,11 +56,11 @@ msiexec.exe /i "$DesktopFolder\Downloads\$prog7zip" /passive
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Git-Portable
-$progGit = "PortableGit-2.12.0-64-bit.7z.exe"
+$progGit = "PortableGit-2.12.1-32-bit.7z.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progGit")) {
     Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
+    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.1.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Git-Portable ya esta descargado" -ForegroundColor Yellow
@@ -68,6 +68,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progGit")) {
 
 # Instalación de Git-Portable
 Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\Git") { Remove-Item -Path "$DesktopFolder\Git" -Recurse -Force }
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" -y "$DesktopFolder\Downloads\$progGit" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
