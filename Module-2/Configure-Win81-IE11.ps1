@@ -41,10 +41,14 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads")) { mkdir "$DesktopFolder\Downl
 
 # Descarga 7-Zip
 $prog7zip = "7z1604.msi"
-Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
-$start_time = Get-Date
-Invoke-WebRequest http://www.7-zip.org/a/$prog7zip -OutFile "$DesktopFolder\Downloads\$prog7zip"
-Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$prog7zip")) {
+    Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest http://www.7-zip.org/a/$prog7zip -OutFile "$DesktopFolder\Downloads\$prog7zip"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "7-Zip ya estaba descargado" -ForegroundColor Yellow
+}
 
 # Instalación de 7-Zip
 Write-Host "Instalando 7-Zip ... " -ForegroundColor Green -NoNewline
@@ -53,10 +57,14 @@ Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Git-Portable
 $progGit = "PortableGit-2.12.0-64-bit.7z.exe"
-Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
-$start_time = Get-Date
-Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
-Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progGit")) {
+    Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.0.windows.1/$progGit -OutFile "$DesktopFolder\Downloads\$progGit"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Git-Portable ya esta descargado" -ForegroundColor Yellow
+}
 
 # Instalación de Git-Portable
 Write-Host "Descomprimiendo Git Portable ... " -ForegroundColor Green -NoNewline
