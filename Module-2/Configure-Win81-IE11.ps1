@@ -97,13 +97,30 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Invoke-WebRequest http://www.nirsoft.net/utils/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
-    Write-Host "SysinternalsSuite ya esta descargado" -ForegroundColor Yellow
+    Write-Host "NirCmd ya esta descargado" -ForegroundColor Yellow
 }
 
 # Instalación de NirCmd
 Write-Host "Descomprimiendo NirCmd ... " -ForegroundColor Green -NoNewline
 if (Test-Path -Path "$DesktopFolder\Nirsoft") { Remove-Item -Path "$DesktopFolder\Nirsoft" -Recurse -Force }
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Nirsoft" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
+# Descarga Hstart
+$progDownload = "Hstart_4.3-setup.exe"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Hstart ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest http://www.ntwind.com/download/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Hstart ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Hstart
+Write-Host "Descomprimiendo Hstart ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\Hstart") { Remove-Item -Path "$DesktopFolder\Hstart" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Hstart" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga scripts del Máster
