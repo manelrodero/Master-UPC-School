@@ -1,0 +1,12 @@
+- Restaurar "Snapshot Inicial"
+- Iniciar Win81 IE11
+- Seleccionar "Yes" en "Networks"
+- Dispositivos > Insertar CD de las "Guest Additions"
+- Ejecutar D:\VBoxWindowsAdditions.exe
+- Actualizar "Oracle VM VirtualBox Guest Additions" con las opciones por defecto
+- Reiniciar el equipo
+- Descargar https://github.com/manelrodero/Master-UPC-School/Module-2/Configure-Start.bat
+- Ejecutar como Administrador
+- Aceptar UAC
+
+
