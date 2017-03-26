@@ -8,7 +8,7 @@ pause&cls
 
 wevtutil qe System /q:"*[System[(EventID=7040)]]" /c:3 /f:text /rd:true
 echo.
-echo - Los 3 eventos mas recientes con ID=7036 del log System en formato texto
+echo - Los 3 eventos mas recientes con ID=7040 del log System en formato texto
 echo   wevtutil qe System /q:"*[System[(EventID=7040)]]" /c:3 /f:text /rd:true
 pause&cls
 
