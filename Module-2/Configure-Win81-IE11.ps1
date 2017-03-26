@@ -72,6 +72,23 @@ if (Test-Path -Path "$DesktopFolder\Git") { Remove-Item -Path "$DesktopFolder\Gi
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Git" -y "$DesktopFolder\Downloads\$progGit" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga Sysinternals Suite
+$progSysinternals = "SysinternalsSuite.zip"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progSysinternals")) {
+    Write-Host "Descargando Sysinternals Suite ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://download.sysinternals.com/files/$progSysinternals -OutFile "$DesktopFolder\Downloads\$progSysinternals"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "SysinternalsSuite ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Sysinternals Suite
+Write-Host "Descomprimiendo Sysinternals Suite ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\Sysinternals") { Remove-Item -Path "$DesktopFolder\Sysinternals" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Sysinternals" -y "$DesktopFolder\Downloads\$progSysinternals" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
 # Descarga scripts del Máster
 if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts" | Out-Null }
 & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
