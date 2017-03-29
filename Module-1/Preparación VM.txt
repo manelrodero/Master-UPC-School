@@ -1,5 +1,7 @@
+WINDOWS 8.1
+===========
 - Restaurar "Snapshot Inicial"
-- Iniciar Win81 IE11
+- Iniciar "Win81 IE11 Trial 90"
 - Seleccionar "Yes" en "Networks"
 - Dispositivos > Insertar CD de las "Guest Additions"
 - Ejecutar D:\VBoxWindowsAdditions.exe
@@ -9,4 +11,31 @@
 - Ejecutar como Administrador
 - Aceptar UAC
 
+UBUNTU 14.04
+============
+- Restaurar "Snapshot Inicial"
+- Iniciar "Ubuntu Desktop 14.04.5 LTS"
+- El usuario es "ubuntu" y la contraseña es "ubun14$tu"
+- Abrir un terminal (CTRL+ALT+T)
+- Actualizar repositorios: sudo apt-get update
 
+UBUNTU 16.04
+============
+- Restaurar "Snapshot Inicial"
+- Iniciar "Ubuntu Desktop 16.04.1 LTS"
+- El usuario es "ubuntu" y la contraseña es "ubun16$tu"
+- Abrir un terminal (CTRL+ALT+T)
+- Actualizar repositorios: sudo apt-get update
+
+CARPETAS COMPARTIDAS
+====================
+Oracle VirtualBox permite acceder desde los SO 'guest' a recursos compartidos desde la máquina 'host'
+Para hacerlo hay que hacer lo siguiente:
+- Dispositivos > Carpetas compartidas > Preferencias de carpetas compartidas
+- Seleccionar "Agregar nueva carpeta compartida" [+]
+- Explorar hasta seleccionar la carpeta que se quiere compartir
+- Especificar un nombre de recurso compartido
+- Seleccionar las opciones de compartición (sólo lectura, automontar, hacer permanente)
+Después, desde la máquina 'guest' se puede acceder de la manera habitual:
+- Windows: net use x: \\vboxsvr\<share>
+- Linux: mount -t vboxf <share> <mount_point>
