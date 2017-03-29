@@ -120,7 +120,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 # Instalación de Hstart
 Write-Host "Descomprimiendo Hstart ... " -ForegroundColor Green -NoNewline
 if (Test-Path -Path "$DesktopFolder\Hstart") { Remove-Item -Path "$DesktopFolder\Hstart" -Recurse -Force }
-& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Hstart" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Hstart" -y "$DesktopFolder\Downloads\$progDownload" "hstart.exe" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga scripts del Máster
