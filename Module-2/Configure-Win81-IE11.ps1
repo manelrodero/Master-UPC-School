@@ -123,6 +123,40 @@ if (Test-Path -Path "$DesktopFolder\Hstart") { Remove-Item -Path "$DesktopFolder
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Hstart" -y "$DesktopFolder\Downloads\$progDownload" "hstart.exe" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga Logger
+$progDownload = "logger.zip"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Logger ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest http://www.monitorware.com/en/logger/download.asp -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Logger ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Logger
+Write-Host "Descomprimiendo Logger ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\Logger") { Remove-Item -Path "$DesktopFolder\Logger" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Logger" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
+# Descarga Event to Syslog
+$progDownload = "Evtsys_4.5.1_32-Bit-LP.zip"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Event to Syslog ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/eventlog-to-syslog/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Event to Syslog ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Event to Syslog
+Write-Host "Descomprimiendo Event to Syslog ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\EventSyslog") { Remove-Item -Path "$DesktopFolder\EventSyslog" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" e -o"$DesktopFolder\EventSyslog" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
 # Descarga scripts del Máster
 if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts" | Out-Null }
 & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
