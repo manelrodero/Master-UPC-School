@@ -62,9 +62,22 @@ installOpenssh() {
 	[ $? != 0 ] && { logThis "apt-get install openssh-server had an error.  Stopping now!"; exit 1; } || { logThis "apt-get install openssh-server completed successfully."; }
 }
 
+
+gitCLI() {
+	gitCheck=$(which git)
+	[ $? != 0 ] && { logThis "git is NOT installed."; installGit; } || { logThis "git is available."; }
+}
+
+installGit() {
+	logThis "Installing git."
+	installGit=$(sudo /usr/bin/apt-get install git -qy)
+	[ $? != 0 ] && { logThis "apt-get install git had an error.  Stopping now!"; exit 1; } || { logThis "apt-get install git completed successfully."; }
+}
+
 verifyRoot
 init
 update
+gitCLI
 sshServer
 
 exit 0
