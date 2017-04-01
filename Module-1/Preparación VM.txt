@@ -7,8 +7,8 @@ WINDOWS 8.1
 - Ejecutar D:\VBoxWindowsAdditions.exe
 - Actualizar "Oracle VM VirtualBox Guest Additions" con las opciones por defecto
 - Reiniciar el equipo
-- Descargar https://github.com/manelrodero/Master-UPC-School/Module-2/Configure-Start.bat
-- Ejecutar como Administrador
+- Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Win81.bat
+- Botón derecho encima del script y seleccionar ejecutar como Administrador
 - Aceptar UAC
 
 UBUNTU 14.04
@@ -16,16 +16,18 @@ UBUNTU 14.04
 - Restaurar "Snapshot Inicial"
 - Iniciar "Ubuntu Desktop 14.04.5 LTS"
 - El usuario es "ubuntu" y la contraseña es "ubun14$tu"
-- Abrir un terminal (CTRL+ALT+T)
-- Actualizar repositorios: sudo apt-get update
+- Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Ubuntu14.sh
+- Hacer que el script sea ejecutable: chmod u+x Configure-Ubuntu14.sh
+- Ejecutar como root: sudo Configure-Ubuntu14.sh
 
 UBUNTU 16.04
 ============
 - Restaurar "Snapshot Inicial"
 - Iniciar "Ubuntu Desktop 16.04.1 LTS"
 - El usuario es "ubuntu" y la contraseña es "ubun16$tu"
-- Abrir un terminal (CTRL+ALT+T)
-- Actualizar repositorios: sudo apt-get update
+- Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Ubuntu16.sh
+- Hacer que el script sea ejecutable: chmod u+x Configure-Ubuntu16.sh
+- Ejecutar como root: sudo Configure-Ubuntu16.sh
 
 CARPETAS COMPARTIDAS
 ====================
