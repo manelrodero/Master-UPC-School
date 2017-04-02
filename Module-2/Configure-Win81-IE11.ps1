@@ -185,6 +185,26 @@ if (Test-Path -Path "$DesktopFolder\VisualSyslog") { Remove-Item -Path "$Desktop
 & "$env:ProgramFiles\7-Zip\7z.exe" e -o"$DesktopFolder\VisualSyslog" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga sysmonconfig-export.xml
+if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml")) {
+    Write-Host "Descargando sysmonconfig SwiftOnSecurity ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://github.com/SwiftOnSecurity/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "sysmonconfig SwiftOnSecurity ya esta descargado" -ForegroundColor Yellow
+}
+
+# Descarga sysmonconfig-export.xml
+if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml")) {
+    Write-Host "Descargando sysmonconfig Ion-Storm ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://github.com/ion-storm/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "sysmonconfig Ion-Storm ya esta descargado" -ForegroundColor Yellow
+}
+
 # Descarga scripts del Máster
 if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts" | Out-Null }
 & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
