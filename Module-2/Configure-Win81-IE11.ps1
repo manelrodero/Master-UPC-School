@@ -168,6 +168,23 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "NXLog-CE ya esta descargado" -ForegroundColor Yellow
 }
 
+# Descarga Visual Syslog Server
+$progDownload = "visualsyslog_setup.zip"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Visual Syslog Server ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://github.com/MaxBelkov/visualsyslog/releases/download/v1.6.4/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Visual Syslog ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Visual Syslog Server
+Write-Host "Descomprimiendo Visual Syslog Server ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\VisualSyslog") { Remove-Item -Path "$DesktopFolder\VisualSyslog" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" e -o"$DesktopFolder\VisualSyslog" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
 # Descarga scripts del Máster
 if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts" | Out-Null }
 & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
