@@ -1,4 +1,4 @@
-WINDOWS 8.1
+﻿WINDOWS 8.1
 ===========
 - Restaurar "Snapshot Inicial"
 - Iniciar "Win81 IE11 Trial 90"
@@ -40,4 +40,4 @@ Para hacerlo hay que hacer lo siguiente:
 - Seleccionar las opciones de compartición (sólo lectura, automontar, hacer permanente)
 Después, desde la máquina 'guest' se puede acceder de la manera habitual:
 - Windows: net use x: \\vboxsvr\<share>
-- Linux: mount -t vboxf <share> <mount_point>
+- Linux: mount -t vboxsf <share> <mount_point>
