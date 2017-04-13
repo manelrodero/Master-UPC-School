@@ -1,0 +1,23 @@
+# Ejemplos de reglas para Snort
+# Se ha detectado que en las últimas versiones hay algún problema para detectar contenido :-(
+
+alert icmp any any -> $HOME_NET any (msg:"Paquete ICMP"; sid:10000001;)
+
+alert tcp $HOME_NET any -> any 80 (msg:"Tráfico Puerto 80"; sid:10000002;)
+
+alert tcp $HOME_NET any -> any any (content:"GET"; msg:"GET encontrado"; sid:10000003;)
+
+alert tcp $HOME_NET any -> any any (content:"|47 45 54|"; msg:"GET binario encontrado"; sid:10000004;)
+
+alert tcp $HOME_NET any -> any any (content:"HTTP"; offset:4; msg:"HTTP encontrado"; sid:10000005;)
+
+alert tcp $HOME_NET any -> any any (content:"HTTP"; offset:4; depth:40; msg:"HTTP encontrado"; sid:10000006;)
+
+# Pruebas usando sintaxis de los ficheros de reglas "Community"
+# Tampoco ha funcionado la detección de contenido
+
+alert tcp $HOME_NET any -> any any (msg:"GET encontrado"; flow:to_server,established; content:"GET"; http_method; sid:10000007;)
+
+alert tcp $HOME_NET any -> any any (msg:"GET encontrado"; content:"GET"; http_method; sid:10000008;)
+
+alert tcp $HOME_NET any -> any any (msg:"GET encontrado"; content:"google"; http_uri; sid:10000009;)
