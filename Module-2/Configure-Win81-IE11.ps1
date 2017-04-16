@@ -212,6 +212,17 @@ if (!(Test-Path -Path "$DesktopFolder\Scripts")) { mkdir "$DesktopFolder\Scripts
 # Creación carpeta C:\TEST
 if (!(Test-Path -Path "C:\TEST")) { mkdir "C:\TEST" | Out-Null }
 
+# Descarga OSSEC
+$progDownload = "ossec-agent-win32-2.8.3.exe"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando OSSEC ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://bintray.com/artifact/download/ossec/ossec-hids/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "OSSEC ya esta descargado" -ForegroundColor Yellow
+}
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
 $tecla=$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
