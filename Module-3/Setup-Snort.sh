@@ -221,5 +221,11 @@ pulledpork.pl -V
 # Comentar reglas para usar PulledPork
 sudo sed -i 's/include \$RULE\_PATH/#include \$RULE\_PATH/' /etc/snort/snort.conf
 
+# Descarga ficheros de configuración
+downloadFile snort.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/snort.conf
+downloadFile pulledpork.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/pulledpork.conf
+sudo cp snort.conf /etc/snort
+sudo cp pulledpork.conf /etc/snort
+
 exit 0
 
