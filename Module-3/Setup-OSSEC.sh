@@ -42,7 +42,7 @@ createDir() {
 
 createDirNew() {
 	if [ -d $1 ]; then
-		rm -rf $1
+		sudo rm -rf $1
 	fi
 	mkdir $1
 }
@@ -77,7 +77,15 @@ fi
 
 # Instalación de OSSEC
 cd  ~/ossec_src
-echo -ne "- ${BOLD}Configurando ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
+echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
 tar -zxvf ossec-hids-2.8.3.tar.gz >/dev/null 2>&1
+echo -ne "${GREEN}OK${NOCOLOR}\n"
+
+# Descarga ficheros de configuración
+downloadFile preloaded-vars.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/preloaded-vars.conf
+cp preloaded-vars.conf ossec-hids-2.8.3/etc
+
+# Configuración desatendida
+echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
 cd ossec-hids-2.8.3
 sudo ./install.sh
