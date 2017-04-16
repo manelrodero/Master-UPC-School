@@ -206,12 +206,11 @@ if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml")
 }
 
 # Descarga scripts del Máster
-if (!(Test-Path -Path "$DesktopFolder\Scripts")) {
-    mkdir "$DesktopFolder\Scripts" | Out-Null
-    & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
-} else {
-    & "$DesktopFolder\Git\bin\git.exe" pull https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
+if (Test-Path -Path "$DesktopFolder\Scripts") {
+    Remove-Item "$DesktopFolder\Scripts" -Recurse -Force | Out-Null
 }
+mkdir "$DesktopFolder\Scripts" -Recurse -Force | Out-Null
+& "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
 
 # Creación carpeta C:\TEST
 if (!(Test-Path -Path "C:\TEST")) { mkdir "C:\TEST" | Out-Null }
