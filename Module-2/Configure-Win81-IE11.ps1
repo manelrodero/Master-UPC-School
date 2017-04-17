@@ -209,7 +209,7 @@ if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml")
 if (Test-Path -Path "$DesktopFolder\Scripts") {
     Remove-Item "$DesktopFolder\Scripts" -Recurse -Force | Out-Null
 }
-mkdir "$DesktopFolder\Scripts" -Recurse -Force | Out-Null
+mkdir "$DesktopFolder\Scripts" -Force | Out-Null
 & "$DesktopFolder\Git\bin\git.exe" clone https://github.com/manelrodero/Master-UPC-School.git "$DesktopFolder\Scripts"
 
 # Creación carpeta C:\TEST
