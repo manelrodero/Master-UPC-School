@@ -66,6 +66,9 @@ installPackage openssh-server
 installPackage build-essential
 installPackage git
 
+# Por si estuviera en marcha
+sudo /var/ossec/bin/ossec-control stop >/dev/null 2>&1
+
 # Creación directorio para descargar los paquetes
 createDirNew ~/ossec_src
 
@@ -86,6 +89,41 @@ downloadFile preloaded-vars.conf https://github.com/manelrodero/Master-UPC-Schoo
 cp preloaded-vars.conf ossec-hids-2.8.3/etc
 
 # Configuración desatendida
-echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
+echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC 2.8.3${NOCOLOR} [~30seg]... "
 cd ossec-hids-2.8.3
-sudo ./install.sh
+sudo ./install.sh >/dev/null 2>&1
+echo -ne "${GREEN}OK${NOCOLOR}\n"
+
+echo -ne "- ${BOLD}Parando OSSEC${NOCOLOR}... "
+sudo /var/ossec/bin/ossec-control stop >/dev/null 2>&1
+echo -ne "${GREEN}OK${NOCOLOR}\n"
+
+# Instalación de Apache para OSSEC Web UI
+installPackage apache2
+installPackage apache2-utils
+
+# Instalación del soporte para PHP5
+installPackage php5 
+installPackage libapache2-mod-php5
+
+# Descarga de OSSEC Web UI
+cd  ~/ossec_src
+if [ ! -f 0.9.tar.gz ]; then
+	downloadFile 0.9.tar.gz https://github.com/ossec/ossec-wui/archive/0.9.tar.gz
+fi
+
+# Instalación de OSSEC Web UI
+cd  ~/ossec_src
+echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC Web UI 0.9${NOCOLOR}... "
+tar -zxvf 0.9.tar.gz >/dev/null 2>&1
+echo -ne "${GREEN}OK${NOCOLOR}\n"
+
+sudo mv ossec-wui-0.9 /var/www/html/ossec-wui/
+cd /var/www/html/ossec-wui/
+sudo ./setup.sh
+
+# Descarga ficheros de configuración
+downloadFile apache2.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/apache2.conf
+sudo cp apache2.conf /etc/apache2/apache2.conf
+
+sudo apache2ctl restart
