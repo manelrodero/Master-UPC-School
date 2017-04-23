@@ -237,6 +237,17 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Maltego ya esta descargado" -ForegroundColor Yellow
 }
 
+# Descarga Shodan Entities
+$progDownload = "shodan-maltego-entities.mtz"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Shodan Entities ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://static.shodan.io/downloads/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Shodan Entities ya esta descargado" -ForegroundColor Yellow
+}
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
 $tecla=$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
