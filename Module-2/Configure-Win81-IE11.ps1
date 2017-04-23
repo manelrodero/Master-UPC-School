@@ -226,6 +226,17 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "OSSEC ya esta descargado" -ForegroundColor Yellow
 }
 
+# Descarga Maltego
+$progDownload = "MaltegoCESetup.JRE.v4.0.11.9358.exe"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Maltego ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://www.paterva.com/malv4/community/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Maltego ya esta descargado" -ForegroundColor Yellow
+}
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para continuar ..."
 $tecla=$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
