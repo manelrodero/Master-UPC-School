@@ -1,4 +1,4 @@
-# Script de Configuración de Windows 8.1 IE11
+﻿# Script de Configuración de Windows 8.1 IE11
 
 # Configuración de la zona horaria
 tzutil /s "Romance Standard Time" 
@@ -25,6 +25,11 @@ Write-Host "Deshabilitando Auto Update (Microsoft Update)" -ForegroundColor Gree
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'AUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'CachedAUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'IncludeRecommendedUpdates' -Value 1
+
+# Deshabilitar SMBv1 (WannaCry)
+Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force > $null
+sc.exe config lanmanworkstation depend= bowser/mrxsmb20/nsi > $null
+sc.exe config mrxsmb10 start= disabled > $null
 
 # Obtención de la ubicación de carpetas especiales
 # http://windowsitpro.com/powershell/easily-finding-special-paths-powershell-scripts
@@ -162,7 +167,7 @@ $progDownload = "nxlog-ce-2.9.1716.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NXLog-CE ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://nxlog.co/system/files/products/files/1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://nxlog.co/system/files/products/files/348/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "NXLog-CE ya esta descargado" -ForegroundColor Yellow
@@ -249,5 +254,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 }
 
 # Final del script (evitar que se cierre)
-Write-Host "Pulsa una tecla para continuar ..."
-$tecla=$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+Write-Host "Pulsa una tecla para reiniciar el equipo ..."
+$tecla = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
+Restart-Computer -Force
