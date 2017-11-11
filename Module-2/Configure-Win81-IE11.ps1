@@ -27,6 +27,7 @@ Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsU
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'IncludeRecommendedUpdates' -Value 1
 
 # Deshabilitar SMBv1 (WannaCry)
+Write-Host "Deshabilitando SMBv1" -ForegroundColor Green
 Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force > $null
 sc.exe config lanmanworkstation depend= bowser/mrxsmb20/nsi > $null
 sc.exe config mrxsmb10 start= disabled > $null
