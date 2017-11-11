@@ -3,7 +3,7 @@
 wevtutil.exe sl Security /ab:true /rt:true
 wevtutil.exe sl Application /ab:true /rt:true
 echo.
-echo - Se activa la retención y el archivado automático de los log Security y Application
+echo - Se activa la retencion y el archivado automatico de los log Security y Application
 echo   wevtutil.exe sl Security /ab:true /rt:true
 echo   wevtutil.exe sl Application /ab:true /rt:true
 pause&cls
