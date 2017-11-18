@@ -22,7 +22,7 @@ LogFile="${logtag}-${logDate}.log"
 
 verifyRoot () {
 	# Make sure we are root before proceeding
-	[ `id -u` != 0 ] && { echo "$0: Please run this as root."; exit 0; }
+	[ `id -u` != 0 ] && { echo "$0: Please run this as root (using sudo)."; exit 0; }
 }
 
 logThis () {
