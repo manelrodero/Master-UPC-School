@@ -95,6 +95,23 @@ if (Test-Path -Path "$DesktopFolder\Sysinternals") { Remove-Item -Path "$Desktop
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Sysinternals" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga Notepad++
+$progDownload = "npp.7.5.1.bin.7z"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Notepad++ ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://notepad-plus-plus.org/repository/7.x/7.5.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Notepad++ ya esta descargado" -ForegroundColor Yellow
+}
+
+# Instalación de Notepad++
+Write-Host "Descomprimiendo Notepad++ ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\Notepad++") { Remove-Item -Path "$DesktopFolder\Notepad++" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Notepad++" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
+Write-Host "OK" -ForegroundColor Yellow
+
 # Descarga NirCmd
 $progDownload = "nircmd.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
