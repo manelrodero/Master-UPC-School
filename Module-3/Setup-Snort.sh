@@ -104,7 +104,7 @@ echo -ne "${GREEN}OK${NOCOLOR}\n"
 # Descarga de Snort
 cd ~/snort_src
 if [ ! -f snort-2.9.9.0.tar.gz ]; then
-	downloadFile snort-2.9.9.0.tar.gz https://www.snort.org/downloads/snort/snort-2.9.9.0.tar.gz
+	downloadFile snort-2.9.9.0.tar.gz https://www.snort.org/downloads/archive/snort/snort-2.9.9.0.tar.gz
 fi
 
 # Instalación de los pre-requisitos de Snort
