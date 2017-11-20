@@ -126,4 +126,6 @@ sudo ./setup.sh
 downloadFile apache2.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/apache2.conf
 sudo cp apache2.conf /etc/apache2/apache2.conf
 
+echo -ne "- ${BOLD}Reiniciando ${BLUE}Apache${NOCOLOR}... "
 sudo apache2ctl restart
+echo -ne "${GREEN}OK${NOCOLOR}\n"
