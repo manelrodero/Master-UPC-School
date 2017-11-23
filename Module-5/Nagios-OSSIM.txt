@@ -1,0 +1,75 @@
+En Windows 8.1
+
+- Descargar NSClient++
+- Instalación típica (dirección servidor y contraseña)
+- Configuración por defecto
+
+En OSSIM (Jailbreak)
+
+- Buscar la definición del cliente (se tiene que haber añadido en 'Availability')
+- Fichero /etc/nagios3/conf.d/ossim-configs/hosts/192.168.56.102.cfg
+
+define host{
+ use             generic-host
+ host_name       Windows81
+ alias           Windows 8.1
+ address         192.168.56.102
+ statusmap_image     win40.gd2
+ icon_image          win40.png
+
+}
+
+- Añadir los servicios a monitorizar en un fichero con el mismo nombre que el 'host-name'
+
+/etc/nagios3/conf.d/ossim-configs/host-services/Windows81.cfg
+
+define service{
+ use                     generic-service
+ host_name               Windows81
+ service_description     Uptime
+ check_command           check_ntcomm!UPTIME
+ }
+
+define service{
+ use                     generic-service
+ host_name               Windows81
+ service_description     CPU Load
+ check_command           check_ntcomm!CPULOAD!-l 5,80,90
+ }
+
+define service{
+ use                     generic-service
+ host_name               Windows81
+ service_description     Memory Usage
+ check_command           check_ntcomm!MEMUSE!-w 80 -c 90
+ }
+
+define service{
+ use                     generic-service
+ host_name               Windows81
+ service_description     Drive C – Windows
+ check_command           check_ntcomm!USEDDISKSPACE!-l c -w 80 -c 90
+ }
+
+- Comprobarlo y dará errores porque falta el comando:
+
+/usr/sbin/nagios3 -v /etc/nagios3/nagios.cfg
+
+- Añadimos la definición del comando en el fichero: /etc/nagios3/conf.d/services_nagios2.cfg
+
+define command {
+        command_name    check_ntcomm
+        command_line    /usr/lib/nagios/plugins/check_nt -H '$HOSTADDRESS$' -s master -p 12489 -t 180 -v '$ARG1$' '$ARG2$'
+}
+
+- Se comprueba y ahora todo OK
+
+/usr/sbin/nagios3 -v /etc/nagios3/nagios.cfg
+
+- Se reinicia Nagios
+
+service nagios3 restart
+
+- En Environment > Availability estarán los servicios
+- Se comenzarán a monitorizar en breve
+
