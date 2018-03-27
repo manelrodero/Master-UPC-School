@@ -1,21 +1,41 @@
-@echo off
-setlocal
+@ECHO OFF
 
-set VBoxManage=C:\Program Files\Oracle\VirtualBox\VBoxManage.exe
+SETLOCAL
 
-if exist "%VBoxManage%" (
-	"%VBoxManage%" dhcpserver remove -netname "NatVBox" >nul 2>&1
-	"%VBoxManage%" natnetwork stop --netname "NatVBox"
-	"%VBoxManage%" natnetwork remove --netname NatVBox >nul 2>&1
+ECHO -------------------------------------------------------------------------------
+ECHO %~n0 - Configurador VirtualBox "NatVBox" en 10.0.20.0/24
+ECHO -------------------------------------------------------------------------------
+ECHO.
 
-	"%VBoxManage%" natnetwork add --netname NatVBox --network "10.0.20.0/24" --enable --dhcp on
-	"%VBoxManage%" natnetwork start --netname NatVBox
-	"%VBoxManage%" dhcpserver modify --netname NatVBox --ip 10.0.20.3 --netmask 255.255.255.0 --lowerip 10.0.20.128 --upperip 10.0.20.254
+SET PROG=%ProgramFiles(x86)%\Oracle\VirtualBox\VBoxManage.exe
+IF EXIST "%PROG%" GOTO OK
+SET PROG=%ProgramFiles%\Oracle\VirtualBox\VBoxManage.exe
+IF EXIST "%PROG%" GOTO OK
 
-	"%VBoxManage%" list natnets
-	"%VBoxManage%" list dhcpservers
-) else (
-	echo No se ha encontrado "%VBoxManage%"
+ECHO ERROR: No se ha encontrado VirtualBox. Es requisito imprescindible para este curso.
+ECHO        Puedes instalarlo desde https://www.virtualbox.org/.
+ECHO        No olvides instalar el Extension Pack.
+GOTO :EOF
+
+:OK
+
+"%PROG%" list dhcpservers | find /i "NatVBox" >nul
+IF "%ERRORLEVEL%"=="0" (
+	"%PROG%" dhcpserver remove --netname NatVBox
 )
 
-endlocal
+"%PROG%" list natnets | find /i "NatVBox" >nul
+IF "%ERRORLEVEL%"=="0" (
+	"%PROG%" natnetwork stop --netname NatVBox
+	"%PROG%" natnetwork remove --netname NatVBox
+)
+
+"%PROG%" natnetwork add --netname NatVBox --network "10.0.20.0/24" --enable --dhcp on
+"%PROG%" natnetwork start --netname NatVBox
+"%PROG%" dhcpserver modify --netname NatVBox --ip 10.0.20.3 --netmask 255.255.255.0 --lowerip 10.0.20.128 --upperip 10.0.20.254
+
+"%PROG%" list natnets
+"%PROG%" list dhcpservers
+PAUSE
+
+ENDLOCAL
