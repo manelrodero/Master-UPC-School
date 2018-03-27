@@ -62,11 +62,11 @@ msiexec.exe /i "$DesktopFolder\Downloads\$progDownload" /passive
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Git-Portable
-$progDownload = "PortableGit-2.12.1-32-bit.7z.exe"
+$progDownload = "PortableGit-2.16.2-32-bit.7z.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.12.1.windows.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Git-Portable ya esta descargado" -ForegroundColor Yellow
