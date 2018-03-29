@@ -32,6 +32,10 @@ Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force > $null
 sc.exe config lanmanworkstation depend= bowser/mrxsmb20/nsi > $null
 sc.exe config mrxsmb10 start= disabled > $null
 
+# Deshabilitar IPv6 y Teredo
+reg.exe add hklm\system\currentcontrolset\services\tcpip6\parameters /v DisabledComponents /t REG_DWORD /d 0xffffffff /f > $null
+netsh.exe interface teredo set state disabled > $null
+
 # Obtención de la ubicación de carpetas especiales
 # http://windowsitpro.com/powershell/easily-finding-special-paths-powershell-scripts
 # [Environment+SpecialFolder]::GetNames([Environment+SpecialFolder])
