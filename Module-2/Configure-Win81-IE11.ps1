@@ -254,11 +254,11 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 }
 
 # Descarga Maltego
-$progDownload = "MaltegoCESetup.JRE.v4.0.11.9358.exe"
+$progDownload = "MaltegoSetup.v4.1.13.11516.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Maltego ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://www.paterva.com/malv4/community/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://www.paterva.com/malv41/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Maltego ya esta descargado" -ForegroundColor Yellow
@@ -273,6 +273,17 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Shodan Entities ya esta descargado" -ForegroundColor Yellow
+}
+
+# Descarga Java
+$progDownload = "jre-8u191-windows-i586.exe"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando JRE ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://javadl.oracle.com/webapps/download/AutoDL?BundleId=235725_2787e4a523244c269598db4e85c51e0c -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "JRE ya esta descargado" -ForegroundColor Yellow
 }
 
 # Final del script (evitar que se cierre)
