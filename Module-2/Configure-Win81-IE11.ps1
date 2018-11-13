@@ -185,7 +185,7 @@ if (Test-Path -Path "$DesktopFolder\EventSyslog") { Remove-Item -Path "$DesktopF
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga NXLog-CE
-$progDownload = "nxlog-ce-2.9.1716.msi"
+$progDownload = "nxlog-ce-2.10.2102.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NXLog-CE ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
