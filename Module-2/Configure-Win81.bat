@@ -4,6 +4,11 @@
 
 copy nul %~n0.ps1 > nul
 
+sc.exe config wauserv start= disabled > nul
+sc.exe config wsearch start= disabled > nul
+sc.exe stop wauserv > nul
+sc.exe stop wsearch > nul
+
 :: GitHub elimina TLS1.0 y TLS1.1 (https://githubengineering.com/crypto-removal-notice/)
 >> %~n0.ps1 echo [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 >> %~n0.ps1 echo Invoke-Expression (New-Object Net.WebClient).DownloadString('https://github.com/manelrodero/Master-UPC-School/raw/master/Module-2/Configure-Win81-IE11.ps1')
