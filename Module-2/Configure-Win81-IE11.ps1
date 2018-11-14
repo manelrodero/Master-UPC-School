@@ -25,6 +25,16 @@ Write-Host "Deshabilitando Auto Update (Microsoft Update)" -ForegroundColor Gree
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'AUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'CachedAUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'IncludeRecommendedUpdates' -Value 1
+sc.exe config wuauserv start= disabled > $null
+
+# Deshabilitar Windows Search
+# https://lookeen.com/blog/how-to-disable-windows-search-in-windows-8-and-10
+Write-Host "Deshabilitando Windows Search" -ForegroundColor Green
+sc.exe config wsearch start= disabled > $null
+
+# Deshabilitar Windows Defender
+# https://www.windowscentral.com/how-permanently-disable-windows-defender-windows-10
+reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f > $null
 
 # Deshabilitar SMBv1 (WannaCry)
 Write-Host "Deshabilitando SMBv1" -ForegroundColor Green
@@ -63,6 +73,23 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 # Instalación de 7-Zip
 Write-Host "Instalando 7-Zip ... " -ForegroundColor Green -NoNewline
 msiexec.exe /i "$DesktopFolder\Downloads\$progDownload" /passive
+Write-Host "OK" -ForegroundColor Yellow
+
+# Descarga LGPO 2.2
+$progDownload = "LGPO.zip"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando LGPO ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "LGPO ya estaba descargado" -ForegroundColor Yellow
+}
+
+# Instalación de LGPO
+Write-Host "Descomprimiendo LGPO ... " -ForegroundColor Green -NoNewline
+if (Test-Path -Path "$DesktopFolder\LGPO") { Remove-Item -Path "$DesktopFolder\LGPO" -Recurse -Force }
+& "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\LGPO" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Git-Portable
