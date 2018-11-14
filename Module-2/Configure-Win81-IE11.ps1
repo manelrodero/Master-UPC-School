@@ -25,6 +25,9 @@ Write-Host "Deshabilitando Auto Update (Microsoft Update)" -ForegroundColor Gree
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'AUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'CachedAUOptions' -Value 2
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' -Name 'IncludeRecommendedUpdates' -Value 1
+
+# Deshabilitar Windows Update
+Write-Host "Deshabilitando Windows Update" -ForegroundColor Green
 sc.exe config wuauserv start= disabled > $null
 
 # Deshabilitar Windows Search
