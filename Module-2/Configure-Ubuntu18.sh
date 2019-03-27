@@ -82,6 +82,7 @@ cloneRepository() {
 	[ ! -d $master_dir ] && { mkdir $master_dir; }
 	[ ! -d $scripts_dir ] && { mkdir $scripts_dir; }
 	git clone https://github.com/manelrodero/Master-UPC-School.git $scripts_dir
+	chown -R ubuntu:ubuntu $master_dir
 }
 
 verifyRoot
