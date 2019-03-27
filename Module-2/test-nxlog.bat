@@ -8,10 +8,12 @@ if not "%errorLevel%" == "0" (
 )
 
 echo Instalando NXLog-CE...
-msiexec /passive /i "C:\Users\IEUser\Desktop\MASTER\Downloads\nxlog-ce-2.9.1716.msi"
+:: Atención a la versión descargada mediante Configure-Win81-IE11.ps1
+msiexec /passive /i "C:\Users\IEUser\Desktop\MASTER\Downloads\nxlog-ce-2.10.2150.msi"
 
 echo Copiando script nxlog.conf...
-copy /y "C:\Users\IEUser\Desktop\MASTER\Scripts\Module-2\nxlog.conf" "%ProgramFiles%\nxlog\conf\nxlog.master.conf" >nul 2>&1
+copy /y "%ProgramFiles%\nxlog\conf\nxlog.conf" "%ProgramFiles%\nxlog\conf\nxlog.original.conf" >nul 2>&1
+copy /y "C:\Users\IEUser\Desktop\MASTER\Scripts\Module-2\nxlog.conf" "%ProgramFiles%\nxlog\conf\nxlog.conf" >nul 2>&1
 
 echo.
 echo Es necesario editar "%ProgramFiles%\nxlog\conf\nxlog.conf":

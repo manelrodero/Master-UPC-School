@@ -214,7 +214,7 @@ if (Test-Path -Path "$DesktopFolder\EventSyslog") { Remove-Item -Path "$DesktopF
 & "$env:ProgramFiles\7-Zip\7z.exe" e -o"$DesktopFolder\EventSyslog" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
-# Descarga NXLog-CE
+# Descarga NXLog-CE (si cambia la versión, hay que modificar fichero "test-nxlog.bat")
 $progDownload = "nxlog-ce-2.10.2150.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NXLog-CE ... " -ForegroundColor Green -NoNewline
