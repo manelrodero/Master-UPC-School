@@ -215,7 +215,7 @@ if (Test-Path -Path "$DesktopFolder\EventSyslog") { Remove-Item -Path "$DesktopF
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga NXLog-CE
-$progDownload = "nxlog-ce-2.10.2102.msi"
+$progDownload = "nxlog-ce-2.10.2150.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NXLog-CE ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
@@ -283,6 +283,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "OSSEC ya esta descargado" -ForegroundColor Yellow
 }
 
+<#
 # Descarga Maltego
 $progDownload = "MaltegoSetup.v4.1.13.11516.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
@@ -315,6 +316,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 } else {
     Write-Host "JRE ya esta descargado" -ForegroundColor Yellow
 }
+#>
 
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para reiniciar el equipo ..."
