@@ -18,6 +18,9 @@ LogFile="${logtag}-${logDate}.log"
 
 # Script Variables
 
+master_dir="$HOME/Desktop/MASTER"
+scripts_dir="${master_dir}/Scripts"
+
 # Script Functions
 
 verifyRoot () {
@@ -74,10 +77,18 @@ installGit() {
 	[ $? != 0 ] && { logThis "apt-get install git had an error.  Stopping now!"; exit 1; } || { logThis "apt-get install git completed successfully."; }
 }
 
+cloneRepository() {
+	# Crear los directorios para los scripts en el Desktop
+	[ ! -d $master_dir ] && { mkdir $master_dir; }
+	[ ! -d $scripts_dir ] && { mkdir $scripts_dir; }
+	git clone https://github.com/manelrodero/Master-UPC-School.git $scripts_dir
+}
+
 verifyRoot
 init
 update
 gitCLI
 sshServer
+cloneRepository
 
 exit 0
