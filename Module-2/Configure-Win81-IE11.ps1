@@ -273,11 +273,11 @@ mkdir "$DesktopFolder\Scripts" -Force | Out-Null
 if (!(Test-Path -Path "C:\TEST")) { mkdir "C:\TEST" | Out-Null }
 
 # Descarga OSSEC
-$progDownload = "ossec-agent-win32-2.8.3.exe"
+$progDownload = "ossec-agent-win32-3.2.0-6132.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando OSSEC ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://bintray.com/artifact/download/ossec/ossec-hids/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://updates.atomicorp.com/channels/atomic/windows/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "OSSEC ya esta descargado" -ForegroundColor Yellow
