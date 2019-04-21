@@ -64,6 +64,7 @@ installPackage openssh-server
 
 # Instalación de las herramientas de compilación y Git
 installPackage build-essential
+installPackage libz-dev
 installPackage git
 
 # Por si estuviera en marcha
@@ -74,23 +75,23 @@ createDirNew ~/ossec_src
 
 # Descarga de OSSEC
 cd  ~/ossec_src
-if [ ! -f ossec-hids-2.8.3.tar.gz ]; then
-	downloadFile ossec-hids-2.8.3.tar.gz https://bintray.com/artifact/download/ossec/ossec-hids/ossec-hids-2.8.3.tar.gz
+if [ ! -f ossec-hids-3.2.0.tar.gz ]; then
+	downloadFile ossec-hids-3.2.0.tar.gz https://github.com/ossec/ossec-hids/archive/3.2.0.tar.gz
 fi
 
 # Instalación de OSSEC
 cd  ~/ossec_src
 echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
-tar -zxvf ossec-hids-2.8.3.tar.gz >/dev/null 2>&1
+tar -zxvf ossec-hids-3.2.0.tar.gz >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Descarga ficheros de configuración
 downloadFile preloaded-vars.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/preloaded-vars.conf
-cp preloaded-vars.conf ossec-hids-2.8.3/etc
+cp preloaded-vars.conf ossec-hids-3.2.0/etc
 
 # Configuración desatendida
 echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC 2.8.3${NOCOLOR} [~30seg]... "
-cd ossec-hids-2.8.3
+cd ossec-hids-3.2.0
 sudo ./install.sh >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
@@ -102,23 +103,23 @@ echo -ne "${GREEN}OK${NOCOLOR}\n"
 installPackage apache2
 installPackage apache2-utils
 
-# Instalación del soporte para PHP5
-installPackage php5 
-installPackage libapache2-mod-php5
+# Instalación del soporte para PHP (PHP7)
+installPackage php
+installPackage libapache2-mod-php
 
 # Descarga de OSSEC Web UI
 cd  ~/ossec_src
-if [ ! -f 0.9.tar.gz ]; then
-	downloadFile 0.9.tar.gz https://github.com/ossec/ossec-wui/archive/0.9.tar.gz
+if [ ! -f master.zip ]; then
+	downloadFile master.zip https://github.com/ossec/ossec-wui/archive/master.zip
 fi
 
 # Instalación de OSSEC Web UI
 cd  ~/ossec_src
 echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC Web UI 0.9${NOCOLOR}... "
-tar -zxvf 0.9.tar.gz >/dev/null 2>&1
+unzip master.zip >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
-sudo mv ossec-wui-0.9 /var/www/html/ossec-wui/
+sudo mv ossec-wui-master /var/www/html/ossec-wui/
 cd /var/www/html/ossec-wui/
 sudo ./setup.sh
 

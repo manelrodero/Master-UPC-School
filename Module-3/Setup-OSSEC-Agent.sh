@@ -64,6 +64,7 @@ installPackage openssh-server
 
 # Instalación de las herramientas de compilación y Git
 installPackage build-essential
+installPackage libz-dev
 installPackage git
 
 # Creación directorio para descargar los paquetes
@@ -71,23 +72,23 @@ createDirNew ~/ossec_src
 
 # Descarga de OSSEC
 cd  ~/ossec_src
-if [ ! -f ossec-hids-2.8.3.tar.gz ]; then
-	downloadFile ossec-hids-2.8.3.tar.gz https://bintray.com/artifact/download/ossec/ossec-hids/ossec-hids-2.8.3.tar.gz
+if [ ! -f ossec-hids-3.2.0.tar.gz ]; then
+	downloadFile ossec-hids-3.2.0.tar.gz https://github.com/ossec/ossec-hids/archive/3.2.0.tar.gz
 fi
 
 # Instalación de OSSEC
 cd  ~/ossec_src
 echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
-tar -zxvf ossec-hids-2.8.3.tar.gz >/dev/null 2>&1
+tar -zxvf ossec-hids-3.2.0.tar.gz >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Descarga ficheros de configuración
 downloadFile preloaded-vars-agent.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/preloaded-vars-agent.conf
-cp preloaded-vars-agent.conf ossec-hids-2.8.3/etc/preloaded-vars.conf
+cp preloaded-vars-agent.conf ossec-hids-3.2.0/etc/preloaded-vars.conf
 
 # Configuración desatendida
 echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC${NOCOLOR} [~30seg]... "
-cd ossec-hids-2.8.3
+cd ossec-hids-3.2.0
 sudo ./install.sh >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
