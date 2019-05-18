@@ -11,23 +11,23 @@
 - Botón derecho encima del script y seleccionar ejecutar como Administrador
 - Aceptar UAC
 
-UBUNTU 14.04
-============
+LUBUNTU 16.04
+=============
 - Restaurar "Snapshot Inicial"
-- Iniciar "Ubuntu Desktop 14.04.5 LTS"
-- El usuario es "ubuntu" y la contraseña es "ubun14$tu"
-- Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Ubuntu14.sh
-- Hacer que el script sea ejecutable: chmod u+x Configure-Ubuntu14.sh
-- Ejecutar como root: sudo Configure-Ubuntu14.sh
-
-UBUNTU 16.04
-============
-- Restaurar "Snapshot Inicial"
-- Iniciar "Ubuntu Desktop 16.04.1 LTS"
+- Iniciar "Lubuntu Desktop 16.04.4 LTS x64"
 - El usuario es "ubuntu" y la contraseña es "ubun16$tu"
 - Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Ubuntu16.sh
 - Hacer que el script sea ejecutable: chmod u+x Configure-Ubuntu16.sh
 - Ejecutar como root: sudo Configure-Ubuntu16.sh
+
+LUBUNTU 18.04
+=============
+- Restaurar "Snapshot Inicial"
+- Iniciar "Lubuntu Desktop 18.04 LTS x64"
+- El usuario es "ubuntu" y la contraseña es "ubun18$tu"
+- Descargar https://github.com/manelrodero/Master-UPC-School/blob/master/Module-2/Configure-Ubuntu18.sh
+- Hacer que el script sea ejecutable: chmod u+x Configure-Ubuntu18.sh
+- Ejecutar como root: sudo Configure-Ubuntu18.sh
 
 CARPETAS COMPARTIDAS
 ====================
