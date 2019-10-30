@@ -9,7 +9,7 @@ Set-ItemProperty -Path 'HKCU:\Control Panel\International' -Name iFirstDayOfWeek
 
 # Actualización de la ayuda de PowerShell
 Write-Host "Actualizando ayuda de PowerShell" -ForegroundColor Green
-Update-Help
+Update-Help -ErrorAction SilentlyContinue
 
 # Cmdlets para internacionalización
 # https://technet.microsoft.com/en-us/library/hh852115.aspx
@@ -63,11 +63,12 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads")) { mkdir "$DesktopFolder\Downl
 # https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell
 
 # Descarga 7-Zip
-$progDownload = "7z1604.msi"
+$progDownload = "7z1900.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando 7-Zip ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest http://www.7-zip.org/a/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest http://www.7-zip.org/a/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-14-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/aod7pmr69q3oa10t2ehu03g4gim5osc1/1572458400000/01087789905751661516/*/1Bp_rE_vRCbGr8iGGtmojyR_xQK40I3NI?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "7-Zip ya estaba descargado" -ForegroundColor Yellow
@@ -83,7 +84,8 @@ $progDownload = "LGPO.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando LGPO ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7E023E7DA8D8/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0o-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/ro7vmrt06t4tgdgkhbeb4hhe4rvt7dha/1572458400000/01087789905751661516/*/1T0JfNd1q0-l2b_22cbHZZuQu-6BvxWTy?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "LGPO ya estaba descargado" -ForegroundColor Yellow
@@ -96,11 +98,12 @@ if (Test-Path -Path "$DesktopFolder\LGPO") { Remove-Item -Path "$DesktopFolder\L
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Git-Portable
-$progDownload = "PortableGit-2.16.2-32-bit.7z.exe"
+$progDownload = "PortableGit-2.23.0-32-bit.7z.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Git-Portable ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://github.com/git-for-windows/git/releases/download/v2.16.2.windows.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-10-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/pd6lj4i4lpugeohf831o6ahu3r0ek66n/1572458400000/01087789905751661516/*/16kCANsKFKl8bmCwAh2E_Qq0hfMS2stsL?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Git-Portable ya esta descargado" -ForegroundColor Yellow
@@ -117,7 +120,8 @@ $progDownload = "SysinternalsSuite.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Sysinternals Suite ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://download.sysinternals.com/files/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://download.sysinternals.com/files/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-04-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/eigem165a0sdajnh2pbvir7bqg0r776p/1572458400000/01087789905751661516/*/188PkQlJM7MUgJR02Ew-X9pgm8eElofAw?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "SysinternalsSuite ya esta descargado" -ForegroundColor Yellow
@@ -130,11 +134,12 @@ if (Test-Path -Path "$DesktopFolder\Sysinternals") { Remove-Item -Path "$Desktop
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga Notepad++
-$progDownload = "npp.7.5.1.bin.7z"
+$progDownload = "npp.7.6.6.bin.7z"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Notepad++ ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://notepad-plus-plus.org/repository/7.x/7.5.1/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://notepad-plus-plus.org/repository/7.x/7.6.6/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-04-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/ivjkm3gfn9qe74onr1nv9c4kds0i81n5/1572458400000/01087789905751661516/*/11hr_YsdbNHQBFwbZyVlt9mNL-KQJ3Ydo?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Notepad++ ya esta descargado" -ForegroundColor Yellow
@@ -151,7 +156,8 @@ $progDownload = "nircmd.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NirCmd ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest http://www.nirsoft.net/utils/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest http://www.nirsoft.net/utils/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0s-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/uvrak58eml8scqdi06ne79ttjk6b83tj/1572458400000/01087789905751661516/*/1BRQ-DCNY8cGrhA05GatnNLoHh2cEHl-C?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "NirCmd ya esta descargado" -ForegroundColor Yellow
@@ -163,12 +169,13 @@ if (Test-Path -Path "$DesktopFolder\Nirsoft") { Remove-Item -Path "$DesktopFolde
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Nirsoft" -y "$DesktopFolder\Downloads\$progDownload" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
+<#
 # Descarga Hstart
-$progDownload = "Hstart_4.3-setup.exe"
+$progDownload = "Hstart_4.8-setup.exe"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Hstart ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest http://www.ntwind.com/download/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://www.ntwind.com/download/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Hstart ya esta descargado" -ForegroundColor Yellow
@@ -179,13 +186,15 @@ Write-Host "Descomprimiendo Hstart ... " -ForegroundColor Green -NoNewline
 if (Test-Path -Path "$DesktopFolder\Hstart") { Remove-Item -Path "$DesktopFolder\Hstart" -Recurse -Force }
 & "$env:ProgramFiles\7-Zip\7z.exe" x -o"$DesktopFolder\Hstart" -y "$DesktopFolder\Downloads\$progDownload" "hstart.exe" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
+#>
 
 # Descarga Logger
 $progDownload = "logger.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Logger ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest http://www.monitorware.com/en/logger/download.asp -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest http://www.monitorware.com/en/logger/download.asp -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0g-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/r3aoidtmoflcsl1fabbjn3e5ag0h1bqb/1572458400000/01087789905751661516/*/1ffUCVQvMmu0fldYy9sHn1OBYlRjuozN5?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Logger ya esta descargado" -ForegroundColor Yellow
@@ -202,7 +211,8 @@ $progDownload = "Evtsys_4.5.1_32-Bit-LP.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Event to Syslog ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/eventlog-to-syslog/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/eventlog-to-syslog/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0c-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/hsec3tjao6nr5ehjpjo9i8ttmivvkc7d/1572458400000/01087789905751661516/*/0B8uAnbkX5CZXekk0MkJ2cFVEZ0U?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Event to Syslog ya esta descargado" -ForegroundColor Yellow
@@ -219,7 +229,8 @@ $progDownload = "nxlog-ce-2.10.2150.msi"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando NXLog-CE ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://nxlog.co/system/files/products/files/348/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://nxlog.co/system/files/products/files/348/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0o-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/ocn81haacbj163jh5jup1kie08enphoh/1572458400000/01087789905751661516/*/1b_bxmZ41GFT0LLGGrXizqNL5bxyQh0gQ?e=download  -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "NXLog-CE ya esta descargado" -ForegroundColor Yellow
@@ -230,7 +241,8 @@ $progDownload = "visualsyslog_setup.zip"
 if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Visual Syslog Server ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/MaxBelkov/visualsyslog/releases/download/v1.6.4/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    # Invoke-WebRequest https://github.com/MaxBelkov/visualsyslog/releases/download/v1.6.4/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest https://doc-0o-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/gocrgq46tqfvk0bk5ftdg1m5r1fd838q/1572465600000/01087789905751661516/*/1DVVacvTssIfQnM9bsqap1XbegcEplW69?e=download -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "Visual Syslog ya esta descargado" -ForegroundColor Yellow
@@ -246,7 +258,8 @@ Write-Host "OK" -ForegroundColor Yellow
 if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml")) {
     Write-Host "Descargando sysmonconfig SwiftOnSecurity ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/SwiftOnSecurity/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml"
+    # Invoke-WebRequest https://github.com/SwiftOnSecurity/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml"
+    Invoke-WebRequest https://doc-0c-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/i8kmp2b06idqojd4l6uk1pjkuvm20sbt/1572465600000/01087789905751661516/*/1OFrDCr7nT-agY6Wd9VWA0q3u4qbH_pr4?e=download -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "sysmonconfig SwiftOnSecurity ya esta descargado" -ForegroundColor Yellow
@@ -256,7 +269,8 @@ if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-swift.xml
 if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml")) {
     Write-Host "Descargando sysmonconfig Ion-Storm ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
-    Invoke-WebRequest https://github.com/ion-storm/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml"
+    # Invoke-WebRequest https://github.com/ion-storm/sysmon-config/raw/master/sysmonconfig-export.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml"
+    Invoke-WebRequest https://doc-10-9o-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/5c8tkelipibo1rfc8eons1lm1giaf3bc/1572465600000/01087789905751661516/*/1SU9wyYIaWab436COcKjI_fdKEUNnE3EA?e=download -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "sysmonconfig Ion-Storm ya esta descargado" -ForegroundColor Yellow
