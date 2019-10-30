@@ -6,8 +6,8 @@ copy nul %~n0.ps1 > nul
 
 sc.exe config wuauserv start= disabled > nul
 sc.exe config WSearch start= disabled > nul
-sc.exe stop wauserv > nul
-sc.exe stop wsearch > nul
+sc.exe stop wuauserv > nul
+sc.exe stop WSearch > nul
 reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f > nul
 
 :: GitHub elimina TLS1.0 y TLS1.1 (https://githubengineering.com/crypto-removal-notice/)
