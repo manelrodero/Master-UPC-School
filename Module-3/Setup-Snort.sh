@@ -17,19 +17,19 @@ NOCOLOR='\033[0m'
 BOLD='\033[1m'
 
 installPackage() {
-	echo -ne "- ${BOLD}Instalando ${BLUE}$1${NOCOLOR}... "
+	echo -ne "- ${BOLD}Instalando ${YELLOW}$1${NOCOLOR}... "
 	res=$(sudo apt-get install -qy $1)
 	[ $? != 0 ] && { echo -ne "${RED}Error!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Correcto${NOCOLOR}\n"; }
 }
 
 downloadFile() {
-	echo -ne "- ${BOLD}Descargando ${BLUE}$1${NOCOLOR}... "
+	echo -ne "- ${BOLD}Descargando ${YELLOW}$1${NOCOLOR}... "
 	res=$(wget -O $1 $2 >/dev/null 2>&1)
 	[ $? != 0 ] && { echo -ne "${RED}Error!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Correcto${NOCOLOR}\n"; }
 }
 
 checkCommand() {
-	echo -ne "- ${BOLD}Comprobando '${BLUE}$1${NOCOLOR}${BOLD}'${NOCOLOR}... "
+	echo -ne "- ${BOLD}Comprobando '${YELLOW}$1${NOCOLOR}${BOLD}'${NOCOLOR}... "
 	gitCheck=$(which $1)
 	[ $? != 0 ] && { echo -ne "${RED}No existe!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Disponible${NOCOLOR}\n"; }
 }
@@ -64,8 +64,8 @@ installPackage openssh-server
 
 # Instalación de ethtool para desactivar GRO/LRO
 installPackage ethtool
-sudo ethtool -K eth0 gro off
-sudo ethtool -K eth1 gro off
+sudo ethtool -K enp0s3 gro off
+sudo ethtool -K enp0s8 gro off
 #sudo ethtool -K eth0 lro off
 #sudo ethtool -K eth1 lro off
 
@@ -84,7 +84,8 @@ createDirNew ~/snort_src
 # Descarga de DAQ
 cd  ~/snort_src
 if [ ! -f daq-2.0.6.tar.gz ]; then
-	downloadFile daq-2.0.6.tar.gz https://www.snort.org/downloads/snort/daq-2.0.6.tar.gz
+	# DAQ 2.0.6 (https://www.snort.org/downloads/snort/daq-2.0.6.tar.gz)
+	downloadFile daq-2.0.6.tar.gz "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/Efgz9Axed65LiiAdryHZ2AkBEoCNbfZMfCDutv3KVuTxXg?download=1"
 fi
 
 # Instalación de los pre-requisitos de DAQ
@@ -93,7 +94,7 @@ installPackage flex
 
 # Instalación de DAQ
 cd  ~/snort_src
-echo -ne "- ${BOLD}Compilando ${BLUE}DAQ 2.0.6${NOCOLOR} [~30seg]... "
+echo -ne "- ${BOLD}Compilando ${YELLOW}DAQ 2.0.6${NOCOLOR} [~30seg]... "
 tar -zxvf daq-2.0.6.tar.gz >/dev/null 2>&1
 cd daq-2.0.6
 ./configure >/dev/null 2>&1
@@ -103,9 +104,12 @@ echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Descarga de Snort
 cd ~/snort_src
-if [ ! -f snort-2.9.9.0.tar.gz ]; then
-	downloadFile snort-2.9.9.0.tar.gz https://www.snort.org/downloads/archive/snort/snort-2.9.9.0.tar.gz
+if [ ! -f snort-2.9.15.tar.gz ]; then
+	# Snort 2.9.15 (https://www.snort.org/downloads/snort/snort-2.9.15.tar.gz)
+	downloadFile snort-2.9.15.tar.gz "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/Ed4iYfMi4JhJnAU1r5UunTkBFXsoB7KFh93eqtF_SV7zEA?download=1"
 fi
+
+
 
 # Instalación de los pre-requisitos de Snort
 installPackage zlib1g-dev
@@ -115,10 +119,10 @@ installPackage libssl-dev
 
 # Instalación de Snort
 cd  ~/snort_src
-echo -ne "- ${BOLD}Compilando ${BLUE}Snort 2.9.9.0${NOCOLOR} [~120seg]... "
-tar -zxvf snort-2.9.9.0.tar.gz >/dev/null 2>&1
-cd snort-2.9.9.0
-./configure --enable-sourcefire >/dev/null 2>&1
+echo -ne "- ${BOLD}Compilando ${YELLOW}Snort 2.9.9.0${NOCOLOR} [~120seg]... "
+tar -zxvf snort-2.9.15.tar.gz >/dev/null 2>&1
+cd snort-2.9.15
+./configure --enable-sourcefire --disable-open-appid >/dev/null 2>&1
 make >/dev/null 2>&1
 sudo make install >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
@@ -137,7 +141,7 @@ checkCommand snort
 snort -V
 
 # Crear el usuario y grupo snort
-echo -ne "- ${BOLD}Creando usuario ${BLUE}snort:snort${NOCOLOR}... "
+echo -ne "- ${BOLD}Creando usuario ${YELLOW}snort:snort${NOCOLOR}... "
 sudo groupadd snort >/dev/null 2>&1
 sudo useradd snort -r -s /sbin/nologin -c SNORT_IDS -g snort >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
@@ -180,18 +184,20 @@ echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Copiar ficheros de configuración
 echo -ne "- ${BOLD}Copiando ficheros configuración${NOCOLOR}... "
-sudo cp ~/snort_src/snort-2.9.9.0/etc/*.conf* /etc/snort
-sudo cp ~/snort_src/snort-2.9.9.0/etc/*.map /etc/snort
-sudo cp ~/snort_src/snort-2.9.9.0/etc/*.dtd /etc/snort
-sudo cp ~/snort_src/snort-2.9.9.0/src/dynamic-preprocessors/build/usr/local/lib/snort_dynamicpreprocessor/* /usr/local/lib/snort_dynamicpreprocessor/
+sudo cp ~/snort_src/snort-2.9.15/etc/*.conf* /etc/snort
+sudo cp ~/snort_src/snort-2.9.15/etc/*.map /etc/snort
+sudo cp ~/snort_src/snort-2.9.15/etc/*.dtd /etc/snort
+sudo cp ~/snort_src/snort-2.9.15/src/dynamic-preprocessors/build/usr/local/lib/snort_dynamicpreprocessor/* /usr/local/lib/snort_dynamicpreprocessor/
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Descargar Snort rules
 cd ~/snort_src
 createDir rules
 
-downloadFile community-rules.tar.gz https://www.snort.org/downloads/community/community-rules.tar.gz
-downloadFile emerging.rules.tar.gz http://rules.emergingthreats.net/open/snort-2.9.0/emerging.rules.tar.gz
+# Community Rules (https://www.snort.org/downloads/community/community-rules.tar.gz)
+downloadFile community-rules.tar.gz "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/ETsevivmay5OnUR9U8WWm7wB1gh7Z8XDLgilTTFcxhYigg?download=1"
+# Emerging Threats Rules (https://rules.emergingthreats.net/open/snort-2.9.0/emerging.rules.tar.gz)
+downloadFile emerging.rules.tar.gz "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EUQKHgM5GE9JkAFgFz7DyusBJ2QDcohD_DzDRJ8Pv8-_PQ?download=1"
 tar -zxvf community-rules.tar.gz -C ./rules/ >/dev/null 2>&1
 tar -zxvf emerging.rules.tar.gz -C ./rules/ >/dev/null 2>&1
 
@@ -201,7 +207,7 @@ installPackage liblwp-useragent-determined-perl
 
 # Descarga e instalación de Pulled Pork
 cd ~/snort_src
-echo -ne "- ${BOLD}Clonando ${BLUE}pulledpork.pl${NOCOLOR}... "
+echo -ne "- ${BOLD}Clonando ${YELLOW}pulledpork.pl${NOCOLOR}... "
 git clone https://github.com/shirkdog/pulledpork.git >/dev/null 2>&1
 if [ ! -d pulledpork ]; then
 	echo -ne "${RED}Error!${NOCOLOR}\n"
