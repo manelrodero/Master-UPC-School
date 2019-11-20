@@ -1,0 +1,92 @@
+PROBLEMA
+========
+El scanner de OpenVAS incorporado en la VM OSSIM 5.3.2 no funciona.
+El problema se debe a que los certificados de servidor y cliente están
+caducados desde Octubre'2017.
+
+SOLUCIÓN
+========
+Crear nuevos certificados de servidor/cliente para recuperar el scanner.
+
+PROCEDIMIENTO
+=============
+
+- Restaurar OSSIM al "Snapshot PostConfig"
+- Arrancar la VM y esperar unos minutos a que ésta inicie
+- Conectar por SSH (putty) a 192.168.56.10 (u: root, p: ossim$16)
+- El OpenVAS estará iniciándose todavía, se puede comprobar su estado:
+
+$ ps -ef | grep -i openvas
+
+- Comprobar que, efectivamente, el scanner está KO:
+
+$ openvasmd --get-scanners
+08b69003-5fc2-4037-a479-93b440211c73  OpenVAS Default
+
+$ openvasmd --verify-scanner 08b69003-5fc2-4037-a479-93b440211c73
+Failed to verify scanner.
+
+- Comprobar las fechas de los certificados (veremos que caducaban en Oct'2017)
+
+for pem in /var/lib/openvas/CA/*.pem; do 
+   printf '%s: %s\n' \
+      "$(date --date="$(openssl x509 -enddate -noout -in "$pem"|cut -d= -f 2)" --iso-8601)" \
+      "$pem"
+done | sort
+
+2017-10-15: /var/lib/openvas/CA/cacert.pem
+2017-10-15: /var/lib/openvas/CA/clientcert.pem
+2017-10-15: /var/lib/openvas/CA/servercert.pem
+
+- Generar los nuevos certificados (mejor interactivo para hacerlos de 1460 días)
+
+# (con -q sería no interactivo)
+$ /usr/sbin/openvas-mkcert -f
+
+# (con -n sería no interactivo)
+$ /usr/sbin/openvas-mkcert-client -i
+
+- Modificar el certificado del scanner caducado:
+
+$ cd /var/lib/openvas
+$ openvasmd --modify-scanner 08b69003-5fc2-4037-a479-93b440211c73 --scanner-ca-pub CA/cacert.pem --scanner-key-pub CA/clientcert.pem --scanner-key-priv private/CA/clientkey.pem
+
+- Si se comprueba ahora, seguirá fallando, pero si se reinician los servicios:
+
+$ /etc/init.d/openvas-scanner restart
+$ /etc/init.d/openvas-manager restart
+
+- Y se comprueba -> voilà OK
+
+$ openvasmd --verify-scanner 08b69003-5fc2-4037-a479-93b440211c73
+Scanner version: OTP/2.0.
+
+- Ahora, si además se quiere tener todo actualizado, se puede ejecutar (se recomienda tener 6Gb de RAM o más):
+
+$ /usr/sbin/openvas-nvt-sync
+$ /usr/sbin/openvas-certdata-sync
+$ /usr/sbin/openvas-scapdata-sync --verbose
+
+- Y, finalmente, se reconstruyen las bases de datos:
+
+$ /etc/init.d/openvas-scanner restart
+$ /etc/init.d/openvas-manager restart
+$ openvasmd --rebuild --progress
+
+history -c && history -w && exit
+
+Nota: Se podría crear un Snapshot (ahora los certificados caducan en 2022 ;-)
+
+2022-11-05: /var/lib/openvas/CA/cacert.pem
+2022-11-05: /var/lib/openvas/CA/clientcert.pem
+2022-11-05: /var/lib/openvas/CA/servercert.pem
+
+REFERENCIAS
+===========
+
+OpenVAS Check Setup
+https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup
+
+http://lists.wald.intevation.org/pipermail/openvas-discuss/2017-January/010546.html
+-> He tenido que subir a 8GB de RAM y 2CPUs para que acabara este comando
+-> Y para no ver cientos de workers en el 'top' (con muchos 'defunct')
