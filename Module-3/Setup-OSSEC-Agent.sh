@@ -17,19 +17,19 @@ NOCOLOR='\033[0m'
 BOLD='\033[1m'
 
 installPackage() {
-	echo -ne "- ${BOLD}Instalando ${BLUE}$1${NOCOLOR}... "
+	echo -ne "- ${BOLD}Instalando ${YELLOW}$1${NOCOLOR}... "
 	res=$(sudo apt-get install -qy $1 >/dev/null 2>&1)
 	[ $? != 0 ] && { echo -ne "${RED}Error!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Correcto${NOCOLOR}\n"; }
 }
 
 downloadFile() {
-	echo -ne "- ${BOLD}Descargando ${BLUE}$1${NOCOLOR}... "
+	echo -ne "- ${BOLD}Descargando ${YELLOW}$1${NOCOLOR}... "
 	res=$(wget -O $1 $2 >/dev/null 2>&1)
 	[ $? != 0 ] && { echo -ne "${RED}Error!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Correcto${NOCOLOR}\n"; }
 }
 
 checkCommand() {
-	echo -ne "- ${BOLD}Comprobando '${BLUE}$1${NOCOLOR}${BOLD}'${NOCOLOR}... "
+	echo -ne "- ${BOLD}Comprobando '${YELLOW}$1${NOCOLOR}${BOLD}'${NOCOLOR}... "
 	gitCheck=$(which $1)
 	[ $? != 0 ] && { echo -ne "${RED}No existe!${NOCOLOR}\n"; exit 1; } || { echo -ne "${GREEN}Disponible${NOCOLOR}\n"; }
 }
@@ -62,6 +62,10 @@ createFileSudo() {
 # Instalación de OpenSSH para administrar el equipo remotamente
 installPackage openssh-server
 
+# Instalación de librerías adicionales para OSSEC 3.3.0 (https://github.com/ossec/ossec-hids/issues/1663)
+installPackage libpcre2-dev
+installPackage zlib1g-dev
+
 # Instalación de las herramientas de compilación y Git
 installPackage build-essential
 installPackage libz-dev
@@ -72,24 +76,25 @@ createDirNew ~/ossec_src
 
 # Descarga de OSSEC
 cd  ~/ossec_src
-if [ ! -f ossec-hids-3.2.0.tar.gz ]; then
-	downloadFile ossec-hids-3.2.0.tar.gz https://github.com/ossec/ossec-hids/archive/3.2.0.tar.gz
+if [ ! -f ossec-hids-3.3.0.tar.gz ]; then
+	# OSSEC 3.3.0 (https://github.com/ossec/ossec-hids/archive/3.3.0.tar.gz)
+	downloadFile ossec-hids-3.3.0.tar.gz "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EcyOsaHyaOBPlAfhh2-_eUABSAu46XpyrkTSTZkX_YAdFw?download=1"
 fi
 
 # Instalación de OSSEC
 cd  ~/ossec_src
-echo -ne "- ${BOLD}Descomprimiendo ${BLUE}OSSEC 2.8.3${NOCOLOR}... "
-tar -zxvf ossec-hids-3.2.0.tar.gz >/dev/null 2>&1
+echo -ne "- ${BOLD}Descomprimiendo ${YELLOW}OSSEC 3.3.0${NOCOLOR}... "
+tar -zxvf ossec-hids-3.3.0.tar.gz >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 # Descarga ficheros de configuración
 downloadFile preloaded-vars-agent.conf https://github.com/manelrodero/Master-UPC-School/raw/master/Module-3/preloaded-vars-agent.conf
-cp preloaded-vars-agent.conf ossec-hids-3.2.0/etc/preloaded-vars.conf
+cp preloaded-vars-agent.conf ossec-hids-3.3.0/etc/preloaded-vars.conf
 
 # Configuración desatendida
-echo -ne "- ${BOLD}Compilando/Configurando ${BLUE}OSSEC${NOCOLOR} [~30seg]... "
-cd ossec-hids-3.2.0
-sudo ./install.sh >/dev/null 2>&1
+echo -ne "- ${BOLD}Compilando/Configurando ${YELLOW}OSSEC${NOCOLOR} [~30seg]... "
+cd ossec-hids-3.3.0
+sudo PCRE2_SYSTEM=yes ./install.sh >/dev/null 2>&1
 echo -ne "${GREEN}OK${NOCOLOR}\n"
 
 echo -ne "- ${BOLD}Parando OSSEC${NOCOLOR}... "
