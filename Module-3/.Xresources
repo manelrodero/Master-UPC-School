@@ -1,0 +1,16 @@
+! Cambiar DPI en Lubuntu (Pantallas FullHD+ 1920x1080 o superior)
+!
+! - Copiar este fichero en ~/.Xresources
+! - Ejecutar el comando: sudo service lightdm restart
+!
+! Referencias:
+! https://code.luasoftware.com/tutorials/linux/enable-hidpi-scaling-on-lubuntu/
+! https://wiki.archlinux.org/index.php/X_resources
+
+Xft.dpi: 141
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
