@@ -423,7 +423,7 @@ Write-Host "Instalando VirtualBox Guest Additions ... " -ForegroundColor Green -
 Write-Host "OK" -ForegroundColor Yellow
 
 # Final del script (evitar que se cierre)
-Write-Host "Pulsa una tecla para reiniciar el equipo ..."
+Write-Host "Pulsa una tecla para apagar el equipo ..."
 $tecla = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
-Restart-Computer -Force
+Stop-Computer -Force
