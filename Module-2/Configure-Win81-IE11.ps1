@@ -392,8 +392,8 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 
 # Instalación de VirtualBox SHA Certs
 Write-Host "Instalando VirtualBox SHA Certs ... " -ForegroundColor Green -NoNewline
-& "$DesktopFolder\Downloads\$progDownload" add-trusted-publisher "$DesktopFolder\Downloads\vbox-sha1.cer" --root "$DesktopFolder\Downloads\vbox-sha1.cer"
-& "$DesktopFolder\Downloads\$progDownload" add-trusted-publisher "$DesktopFolder\Downloads\vbox-sha256.cer" --root "$DesktopFolder\Downloads\vbox-sha256.cer"
+& "$DesktopFolder\Downloads\$progDownload" add-trusted-publisher "$DesktopFolder\Downloads\vbox-sha1.cer" --root "$DesktopFolder\Downloads\vbox-sha1.cer" | Out-Null
+& "$DesktopFolder\Downloads\$progDownload" add-trusted-publisher "$DesktopFolder\Downloads\vbox-sha256.cer" --root "$DesktopFolder\Downloads\vbox-sha256.cer" | Out-Null
 Write-Host "OK" -ForegroundColor Yellow
 
 # Descarga VirtualBox Guest Additions
