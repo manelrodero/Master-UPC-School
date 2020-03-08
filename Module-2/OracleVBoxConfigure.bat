@@ -15,6 +15,7 @@ IF EXIST "%PROG%" GOTO OK
 ECHO ERROR: No se ha encontrado VirtualBox. Es requisito imprescindible para este curso.
 ECHO        Puedes instalarlo desde https://www.virtualbox.org/.
 ECHO        No olvides instalar el Extension Pack.
+PAUSE
 GOTO :EOF
 
 :OK
