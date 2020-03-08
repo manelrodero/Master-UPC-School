@@ -1,0 +1,19 @@
+# Let NetworkManager manage all devices on this system
+# Configuración de direcciones IP estáticas
+
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.56.18/24
+    enp0s8:
+      dhcp4: no
+      addresses:
+        - 10.0.20.18/24
+      gateway4: 10.0.20.1
+      nameservers:
+          search: [local]
+          addresses: [10.0.20.1]
