@@ -65,7 +65,6 @@ installOpenssh() {
 	[ $? != 0 ] && { logThis "apt-get install openssh-server had an error.  Stopping now!"; exit 1; } || { logThis "apt-get install openssh-server completed successfully."; }
 }
 
-
 gitCLI() {
 	gitCheck=$(which git)
 	[ $? != 0 ] && { logThis "git is NOT installed."; installGit; } || { logThis "git is available."; }
@@ -79,10 +78,17 @@ installGit() {
 
 cloneRepository() {
 	# Crear los directorios para los scripts en el Desktop
+	logThis "Cloning repository."
 	[ ! -d $master_dir ] && { mkdir $master_dir; }
 	[ ! -d $scripts_dir ] && { mkdir $scripts_dir; }
 	git clone https://github.com/manelrodero/Master-UPC-School.git $scripts_dir
 	chown -R ubuntu:ubuntu $master_dir
+}
+
+configStaticIP() {
+	logThis "Configuring static IP."
+	sudo cp /etc/network/interfaces /etc/network/interfaces.backup
+	sudo cp $scripts_dir/Module-2/interfaces /etc/network/interfaces
 }
 
 verifyRoot
@@ -91,5 +97,8 @@ update
 gitCLI
 sshServer
 cloneRepository
+configStaticIP
 
+read -rsp $'Pulsa una tecla para apagar el equipo ...\n' -n1 key
+sudo shutdown now
 exit 0
