@@ -422,6 +422,15 @@ Write-Host "Instalando VirtualBox Guest Additions ... " -ForegroundColor Green -
 & "$DesktopFolder\Downloads\$progDownload" /S
 Write-Host "OK" -ForegroundColor Yellow
 
+# Configuración de IP estática
+Write-Host "Configurando Static IP ... " -ForegroundColor Green -NoNewline
+netsh.exe interface ipv4 set address "Ethernet 3" static 10.0.20.81 255.255.255.0 10.0.20.1
+Start-Sleep 5
+netsh.exe interface ipv4 set dnsservers "Ethernet 3" static address=10.0.20.1 register=none
+Start-Sleep 5
+netsh.exe interface ipv4 set address "Ethernet 2" static 192.168.56.81 255.255.255.0
+Write-Host "OK" -ForegroundColor Yellow
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para apagar el equipo ..."
 $tecla = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
