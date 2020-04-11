@@ -92,6 +92,11 @@ configStaticIP() {
 	sudo cp $scripts_dir/Module-2/01-network-manager-all.yaml /etc/netplan
 }
 
+addVBoxSF() {
+	logThis "Adding to vboxsf group."
+	sudo usermod -a -G vboxsf $(whoami)
+}
+
 verifyRoot
 init
 update
@@ -99,6 +104,7 @@ gitCLI
 sshServer
 cloneRepository
 configStaticIP
+addVBoxSF
 
 read -rsp $'Pulsa una tecla para apagar el equipo ...\n' -n1 key
 sudo shutdown now
