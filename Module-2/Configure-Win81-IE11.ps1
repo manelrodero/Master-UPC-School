@@ -431,6 +431,10 @@ Start-Sleep 5
 netsh.exe interface ipv4 set address "Ethernet 2" static 192.168.56.81 255.255.255.0
 Write-Host "OK" -ForegroundColor Yellow
 
+# Creación del usuario 'test'
+Write-Host "Creando usuario 'test' ... " -ForegroundColor Green -NoNewline
+net.exe user test /add Passw0rd! >$null
+
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para apagar el equipo ..."
 $tecla = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
