@@ -422,6 +422,17 @@ Write-Host "Instalando VirtualBox Guest Additions ... " -ForegroundColor Green -
 & "$DesktopFolder\Downloads\$progDownload" /S
 Write-Host "OK" -ForegroundColor Yellow
 
+# Descarga Microsoft Edge
+$progDownload = "MicrosoftEdgeEnterpriseX86.msi"
+if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
+    Write-Host "Descargando Microsoft Edge ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EZy21lOwcfBKpUvedEHBmUMBti4DVXQ4nl6AE4XNOZU4eg?download=1" -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "Microsoft Edge ya estaba descargado" -ForegroundColor Yellow
+}
+
 # Configuración de IP estática
 Write-Host "Configurando Static IP ... " -ForegroundColor Green -NoNewline
 netsh.exe interface ipv4 set address "Ethernet 3" static 10.0.20.81 255.255.255.0 10.0.20.1
