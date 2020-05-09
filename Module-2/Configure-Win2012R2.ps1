@@ -1,3 +1,4 @@
+#Requires -RunAsAdministrator
 # Script de Configuración de Windows 2012 R2
 
 # Configuración de la zona horaria
@@ -109,6 +110,41 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
 Write-Host "Instalando VirtualBox Guest Additions ... " -ForegroundColor Green -NoNewline
 & "$DesktopFolder\Downloads\$progDownload" /S
 Write-Host "OK" -ForegroundColor Yellow
+
+# Configuración de IP estática
+$ip = Get-NetIPAddress | Where-Object {$_.IPAddress -like '192.168.56.*'}
+if ($ip) {
+    Write-Host "Configurando Static IP 192.168.56.12" -ForegroundColor Green
+    New-NetIPAddress -InterfaceIndex $ip.InterfaceIndex -IPAddress 192.168.56.12 -PrefixLength 24 > $null
+    Set-DnsClient -RegisterThisConnectionsAddress:$false -InterfaceIndex $ip.InterfaceIndex
+    Rename-NetAdapter -Name $ip.InterfaceAlias -NewName "HostOnly"
+} else {
+    Write-Host "No hay interfaz en red 192.168.56.0/24" -ForegroundColor Yellow
+}
+
+$ip = Get-NetIPAddress | Where-Object {$_.IPAddress -like '10.0.20.*'}
+if ($ip) {
+    Write-Host "Configurando Static IP 10.0.20.12" -ForegroundColor Green
+    $gw = (Get-NetIPConfiguration -InterfaceIndex $ip.InterfaceIndex).IPv4DefaultGateway.NextHop
+    $dns = (Get-DnsClientServerAddress -InterfaceIndex $ip.InterfaceIndex -AddressFamily IPv4).ServerAddresses
+    New-NetIPAddress -InterfaceIndex $ip.InterfaceIndex -IPAddress 10.0.20.12 -PrefixLength 24 -DefaultGateway $gw > $null
+    Set-DnsClientServerAddress -InterfaceIndex $ip.InterfaceIndex -ServerAddresses $dns
+    Set-DnsClient -RegisterThisConnectionsAddress:$false -InterfaceIndex $ip.InterfaceIndex
+    Rename-NetAdapter -Name $ip.InterfaceAlias -NewName "NatVBox"
+} else {
+    Write-Host "No hay interfaz en red 10.0.20.0/24" -ForegroundColor Yellow
+}
+
+# Deshabilitar NetBIOS sobre TCP/IP
+$nic = Get-WmiObject Win32_NetworkAdapterConfiguration -filter "ipenabled = 'true'"
+if ($nic) {
+    Write-Host "Deshabilitando NetBIOS over TCP/IP" -ForegroundColor Green
+    $nic.SetTcpipNetbios(2) > $null
+}
+
+# Renombrado del servidor
+Write-Host "Renombrando servidor 'win2012r2' ... " -ForegroundColor Green
+Rename-Computer -NewName "win2012r2" -Force
 
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para apagar el equipo ..."
