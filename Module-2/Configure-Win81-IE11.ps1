@@ -127,9 +127,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Sysinternals Suite ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
     # Invoke-WebRequest https://download.sysinternals.com/files/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
-    # https://drive.google.com/file/d/188PkQlJM7MUgJR02Ew-X9pgm8eElofAw/view?usp=sharing
-    # Invoke-WebRequest "https://drive.google.com/uc?id=188PkQlJM7MUgJR02Ew-X9pgm8eElofAw&export=download" -OutFile "$DesktopFolder\Downloads\$progDownload"
-    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/ET1HOSqUk5xFo1_EKpQqYI8BwiHNdt3XVPUyVQkuoEDUWA?download=1" -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EY4Ou6ePzQ9Hq_w8NxcRNxcBFucXOgbiP9zRnODrIxtmwQ?e=PpKa0C?download=1" -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "SysinternalsSuite ya esta descargado" -ForegroundColor Yellow
@@ -300,6 +298,17 @@ if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-ion.xml")
     Write-Host "sysmonconfig Ion-Storm ya esta descargado" -ForegroundColor Yellow
 }
 
+# Descarga sysmonconfig-export.xml
+if (!(Test-Path -Path "$DesktopFolder\Sysinternals\sysmonconfig-export-olaf.xml")) {
+    Write-Host "Descargando sysmonconfig Olaf Hartong ... " -ForegroundColor Green -NoNewline
+    $start_time = Get-Date
+    # Invoke-WebRequest https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-olaf.xml"
+    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/ES83WRVSPCpKhfn2BcREZXYBKpWcQzD3s_-aoc3aXncH1w?download=1" -OutFile "$DesktopFolder\Sysinternals\sysmonconfig-export-olaf.xml"
+    Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
+} else {
+    Write-Host "sysmonconfig Olaf Hartong ya esta descargado" -ForegroundColor Yellow
+}
+
 # Descarga scripts del Máster
 if (Test-Path -Path "$DesktopFolder\Scripts") {
     Remove-Item "$DesktopFolder\Scripts" -Recurse -Force | Out-Null
@@ -442,9 +451,13 @@ Start-Sleep 5
 netsh.exe interface ipv4 set address "Ethernet 2" static 192.168.56.81 255.255.255.0
 Write-Host "OK" -ForegroundColor Yellow
 
-# Creación del usuario 'test'
-Write-Host "Creando usuario 'test' ... " -ForegroundColor Green -NoNewline
-net.exe user test /add Passw0rd! >$null
+# Creación de usuarios 'testX'
+Write-Host "Creando usuario 'test1' ... " -ForegroundColor Green -NoNewline
+net.exe user test1 /add Passw0rd! >$null
+Write-Host "Creando usuario 'test2' ... " -ForegroundColor Green -NoNewline
+net.exe user test2 /add Passw0rd! >$null
+Write-Host "Creando usuario 'test3' ... " -ForegroundColor Green -NoNewline
+net.exe user test3 /add Passw0rd! >$null
 
 # Final del script (evitar que se cierre)
 Write-Host "Pulsa una tecla para apagar el equipo ..."
