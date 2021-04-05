@@ -127,7 +127,7 @@ if (!(Test-Path -Path "$DesktopFolder\Downloads\$progDownload")) {
     Write-Host "Descargando Sysinternals Suite ... " -ForegroundColor Green -NoNewline
     $start_time = Get-Date
     # Invoke-WebRequest https://download.sysinternals.com/files/$progDownload -OutFile "$DesktopFolder\Downloads\$progDownload"
-    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EY4Ou6ePzQ9Hq_w8NxcRNxcBFucXOgbiP9zRnODrIxtmwQ?e=PpKa0C?download=1" -OutFile "$DesktopFolder\Downloads\$progDownload"
+    Invoke-WebRequest "https://upc0-my.sharepoint.com/:u:/g/personal/manel_rodero_upc_edu/EY4Ou6ePzQ9Hq_w8NxcRNxcBFucXOgbiP9zRnODrIxtmwQ?download=1" -OutFile "$DesktopFolder\Downloads\$progDownload"
     Write-Host "$((Get-Date).Subtract($start_time).Seconds) segundo(s)" -ForegroundColor Yellow
 } else {
     Write-Host "SysinternalsSuite ya esta descargado" -ForegroundColor Yellow
